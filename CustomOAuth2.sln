@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationServer", "AuthorizationServer\AuthorizationServer.csproj", "{CA4AB251-F00C-4CBF-88C4-80AABA3A5C99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceServer", "ResourceServer\ResourceServer.csproj", "{A1560D55-A3C1-4D63-B81A-4FD558E6F747}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "ClientApp\ClientApp.csproj", "{F4FD1EF6-8877-4D40-8ADB-C9C4173C73A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA4AB251-F00C-4CBF-88C4-80AABA3A5C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4AB251-F00C-4CBF-88C4-80AABA3A5C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4AB251-F00C-4CBF-88C4-80AABA3A5C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4AB251-F00C-4CBF-88C4-80AABA3A5C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1560D55-A3C1-4D63-B81A-4FD558E6F747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1560D55-A3C1-4D63-B81A-4FD558E6F747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1560D55-A3C1-4D63-B81A-4FD558E6F747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1560D55-A3C1-4D63-B81A-4FD558E6F747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4FD1EF6-8877-4D40-8ADB-C9C4173C73A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4FD1EF6-8877-4D40-8ADB-C9C4173C73A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4FD1EF6-8877-4D40-8ADB-C9C4173C73A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4FD1EF6-8877-4D40-8ADB-C9C4173C73A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "elbu9j705FWs+nQm7yiTALomq9MDMWcM6SFwMkvdPts=",
+  "Source": "ResourceServer",
+  "BasePath": "_content/ResourceServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

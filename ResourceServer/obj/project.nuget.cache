@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "dgSpecHash": "PIXKD1HdmRA=",
+  "success": true,
+  "projectFilePath": "/home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/ResourceServer.csproj",
+  "expectedPackageFiles": [
+    "/home/mutuku/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/9.0.8/microsoft.aspnetcore.authentication.jwtbearer.9.0.8.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.aspnetcore.openapi/9.0.3/microsoft.aspnetcore.openapi.9.0.3.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.extensions.apidescription.server/9.0.0/microsoft.extensions.apidescription.server.9.0.0.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.identity.abstractions/9.3.0/microsoft.identity.abstractions.9.3.0.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.identitymodel.abstractions/8.13.1/microsoft.identitymodel.abstractions.8.13.1.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.0.1/microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.identitymodel.logging/8.13.1/microsoft.identitymodel.logging.8.13.1.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.identitymodel.protocols/8.0.1/microsoft.identitymodel.protocols.8.0.1.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/8.0.1/microsoft.identitymodel.protocols.openidconnect.8.0.1.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.identitymodel.tokens/8.13.1/microsoft.identitymodel.tokens.8.13.1.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/microsoft.openapi/1.6.23/microsoft.openapi.1.6.23.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/swashbuckle.aspnetcore/9.0.3/swashbuckle.aspnetcore.9.0.3.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/swashbuckle.aspnetcore.swagger/9.0.3/swashbuckle.aspnetcore.swagger.9.0.3.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/swashbuckle.aspnetcore.swaggergen/9.0.3/swashbuckle.aspnetcore.swaggergen.9.0.3.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/swashbuckle.aspnetcore.swaggerui/9.0.3/swashbuckle.aspnetcore.swaggerui.9.0.3.nupkg.sha512",
+    "/home/mutuku/.nuget/packages/system.identitymodel.tokens.jwt/8.0.1/system.identitymodel.tokens.jwt.8.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
