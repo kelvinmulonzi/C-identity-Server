@@ -43,3 +43,4 @@
 /home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/obj/Debug/net9.0/ResourceServer.pdb
 /home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/obj/Debug/net9.0/ResourceServer.genruntimeconfig.cache
 /home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/obj/Debug/net9.0/ref/ResourceServer.dll
+/home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/obj/Debug/net9.0/ResourceServer.sourcelink.json

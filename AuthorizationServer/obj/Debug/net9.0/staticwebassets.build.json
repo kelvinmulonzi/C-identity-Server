@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "X5fyBoREdZRx0efOjGEBugoNPMdVFvsmOE1NHMRZpyY=",
+  "Source": "AuthorizationServer",
+  "BasePath": "_content/AuthorizationServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

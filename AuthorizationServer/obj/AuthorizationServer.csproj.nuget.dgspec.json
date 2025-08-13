@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[9.0.8, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -66,6 +70,18 @@
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[8.13.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
