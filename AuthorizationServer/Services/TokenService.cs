@@ -8,7 +8,7 @@ namespace AuthorizationServer.Services
 {
     public interface ITokenService
     {
-        string GenerateAccessToken(string userId, string clientId, string scope);
+        string GenerateAccessToken(string userId, string username, string email, string clientId, string scope);
         string GenerateRefreshToken();
         ClaimsPrincipal ValidateToken(string token);
     }
@@ -24,7 +24,7 @@ namespace AuthorizationServer.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]!));
         }
 
-        public string GenerateAccessToken(string userId, string clientId, string scope)
+        public string GenerateAccessToken(string userId, string username, string email, string clientId, string scope)
         {
             var claims = new[]
             {
@@ -32,7 +32,10 @@ namespace AuthorizationServer.Services
                 new Claim("client_id", clientId),
                 new Claim("scope", scope),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
+                new Claim(JwtRegisteredClaimNames.Sub, userId),
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Email, email),
             };
 
             var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
@@ -69,8 +72,7 @@ namespace AuthorizationServer.Services
                 ClockSkew = TimeSpan.Zero
             };
 
-            var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
-            return principal;
+            return tokenHandler.ValidateToken(token, validationParameters, out _);
         }
     }
 }

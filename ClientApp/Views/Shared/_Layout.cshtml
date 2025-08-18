@@ -36,7 +36,32 @@
             @RenderBody()
         </main>
     </div>
-
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <li class="nav-item">
+                <span class="nav-link text-dark">Hello, @User.Identity.Name!</span>
+            </li>
+            <li class="nav-item">
+                <form method="post" asp-controller="Auth" asp-action="Logout">
+                    <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Auth" asp-action="Login">Login</a>
+            </li>
+        }
+    </ul>
+</div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - ClientApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

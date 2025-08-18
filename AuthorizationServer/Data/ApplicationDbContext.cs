@@ -17,16 +17,21 @@ namespace AuthorizationServer.Data
             base.OnModelCreating(builder);
 
             // Seed default client
-            builder.Entity<Client>().HasData(new Client
+            var client = new Client
             {
                 Id = 1,
                 ClientId = "test-client",
                 ClientSecret = "test-secret",
                 ClientName = "Test Client",
-                RedirectUri = "https://localhost:5003/callback",
+                RedirectUri = "https://localhost:5003/auth/callback",
                 Scope = "read write",
                 IsActive = true
-            });
+            };
+            
+            builder.Entity<Client>().HasData(client);
+            
+            // Log the client being seeded
+            Console.WriteLine($"[DEBUG] Seeding client: {System.Text.Json.JsonSerializer.Serialize(client)}");
         }
     }
 }

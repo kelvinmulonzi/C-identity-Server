@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace ClientApp.Services
 {
@@ -7,11 +8,13 @@ namespace ClientApp.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<OAuth2Service> _logger;
 
-        public OAuth2Service(HttpClient httpClient, IConfiguration configuration)
+        public OAuth2Service(HttpClient httpClient, IConfiguration configuration, ILogger<OAuth2Service> logger)
         {
             _httpClient = httpClient;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<TokenResponse> ExchangeCodeForToken(string code, string redirectUri)
@@ -30,18 +33,37 @@ namespace ClientApp.Services
             };
 
             var content = new FormUrlEncodedContent(parameters);
+            _logger.LogInformation("Sending token request to {TokenEndpoint}", tokenEndpoint);
+            _logger.LogDebug("Request parameters: {Parameters}", string.Join(", ", parameters.Select(p => $"{p.Key}={p.Value}")));
+            
             var response = await _httpClient.PostAsync(tokenEndpoint, content);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            
+            _logger.LogInformation("Token response: {StatusCode} - {Response}", response.StatusCode, responseContent);
             
             if (response.IsSuccessStatusCode)
             {
-                var jsonString = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<TokenResponse>(jsonString, new JsonSerializerOptions
+                try
                 {
-                    PropertyNameCaseInsensitive = true
-                })!;
+                    var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(responseContent, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    })!;
+                    
+                    _logger.LogInformation("Successfully obtained access token");
+                    return tokenResponse;
+                }
+                catch (JsonException ex)
+                {
+                    _logger.LogError(ex, "Failed to deserialize token response: {Response}", responseContent);
+                    throw new Exception("Invalid token response format");
+                }
             }
-
-            throw new Exception("Failed to exchange code for token");
+            
+            _logger.LogError("Token request failed with status code {StatusCode}. Response: {Response}", 
+                response.StatusCode, responseContent);
+                
+            throw new Exception($"Failed to exchange code for token. Status: {response.StatusCode}, Response: {responseContent}");
         }
 
         public async Task<string> CallProtectedResource(string accessToken, string resourceUrl)

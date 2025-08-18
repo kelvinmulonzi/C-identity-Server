@@ -168,7 +168,7 @@ namespace AuthorizationServer.Migrations
                             ClientName = "Test Client",
                             ClientSecret = "test-secret",
                             IsActive = true,
-                            RedirectUri = "https://localhost:5003/callback",
+                            RedirectUri = "https://localhost:5003/auth/callback",
                             Scope = "read write"
                         });
                 });

@@ -106,3 +106,4 @@
 /home/mutuku/RiderProjects/CustomOAuth2Solution/ClientApp/obj/Debug/net9.0/ClientApp.pdb
 /home/mutuku/RiderProjects/CustomOAuth2Solution/ClientApp/obj/Debug/net9.0/ClientApp.genruntimeconfig.cache
 /home/mutuku/RiderProjects/CustomOAuth2Solution/ClientApp/obj/Debug/net9.0/ref/ClientApp.dll
+/home/mutuku/RiderProjects/CustomOAuth2Solution/ClientApp/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

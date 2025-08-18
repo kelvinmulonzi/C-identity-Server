@@ -6,6 +6,7 @@ using AuthorizationServer.Models;
 using AuthorizationServer.Services;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace AuthorizationServer.Controllers
 {
@@ -35,12 +36,19 @@ namespace AuthorizationServer.Controllers
             [FromQuery] string scope,
             [FromQuery] string state)
         {
+            // Debug: Log all clients in database
+            var allClients = await _context.Clients.ToListAsync();
+            Console.WriteLine($"[DEBUG] All clients in database: {System.Text.Json.JsonSerializer.Serialize(allClients)}");
+            
             // Validate client
             var client = await _context.Clients
                 .FirstOrDefaultAsync(c => c.ClientId == client_id && c.IsActive);
             
             if (client == null)
+            {
+                Console.WriteLine($"[DEBUG] Client not found. ClientId: {client_id}");
                 return BadRequest("Invalid client");
+            }
 
             if (client.RedirectUri != redirect_uri)
                 return BadRequest("Invalid redirect URI");
@@ -48,9 +56,32 @@ namespace AuthorizationServer.Controllers
             if (response_type != "code")
                 return BadRequest("Unsupported response type");
 
-            // In a real implementation, redirect to login page if user not authenticated
-            // For this example, we'll assume user is authenticated
-            var userId = "test-user-id"; // This should come from authentication
+            // For this example, we'll create a test user if it doesn't exist
+            var testUserEmail = "test@example.com";
+            var testUserName = "testuser";
+            var testUserId = "test-user-id";
+            
+            // Check if user exists, if not create one
+            var user = await _userManager.FindByIdAsync(testUserId);
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Id = testUserId,
+                    UserName = testUserName,
+                    Email = testUserEmail,
+                    EmailConfirmed = true
+                };
+                
+                var result = await _userManager.CreateAsync(user);
+                if (!result.Succeeded)
+                {
+                    return BadRequest("Failed to create test user: " + 
+                        string.Join(", ", result.Errors.Select(e => e.Description)));
+                }
+            }
+            
+            var userId = user.Id;
 
             // Generate authorization code
             var code = GenerateAuthorizationCode();
@@ -75,6 +106,13 @@ namespace AuthorizationServer.Controllers
             return Redirect(redirectUrl);
         }
 
+        [HttpGet("debug/clients")]
+        public async Task<IActionResult> ListClients()
+        {
+            var clients = await _context.Clients.ToListAsync();
+            return Ok(clients);
+        }
+
         [HttpPost("token")]
         public async Task<IActionResult> Token([FromForm] TokenRequest request)
         {
@@ -92,32 +130,75 @@ namespace AuthorizationServer.Controllers
 
         private async Task<IActionResult> HandleAuthorizationCodeGrant(TokenRequest request)
         {
+            Console.WriteLine($"[DEBUG] Token request received. ClientId: {request.client_id}, Code: {request.code}");
+            
             // Validate client
             var client = await _context.Clients
                 .FirstOrDefaultAsync(c => c.ClientId == request.client_id && c.IsActive);
 
-            if (client == null || client.ClientSecret != request.client_secret)
+            if (client == null)
+            {
+                Console.WriteLine($"[DEBUG] Client not found or inactive. ClientId: {request.client_id}");
                 return Unauthorized("Invalid client credentials");
+            }
+            
+            if (client.ClientSecret != request.client_secret)
+            {
+                Console.WriteLine($"[DEBUG] Invalid client secret for client: {request.client_id}");
+                return Unauthorized("Invalid client credentials");
+            }
+
+            // Log all codes in database for debugging
+            var allCodes = await _context.AuthorizationCodes.ToListAsync();
+            Console.WriteLine($"[DEBUG] All authorization codes in DB: {System.Text.Json.JsonSerializer.Serialize(allCodes)}");
 
             // Validate authorization code
             var authCode = await _context.AuthorizationCodes
                 .FirstOrDefaultAsync(ac => ac.Code == request.code && 
-                                          ac.ClientId == request.client_id &&
-                                          !ac.IsUsed && 
-                                          ac.ExpiresAt > DateTime.UtcNow);
+                                        ac.ClientId == request.client_id);
 
+            Console.WriteLine($"[DEBUG] Found auth code: {authCode != null}");
+            
             if (authCode == null)
+            {
+                Console.WriteLine($"[DEBUG] Authorization code not found. Code: {request.code}, ClientId: {request.client_id}");
                 return BadRequest("Invalid or expired authorization code");
+            }
+
+            if (authCode.IsUsed)
+            {
+                Console.WriteLine($"[DEBUG] Authorization code already used. Code: {request.code}");
+                return BadRequest("Authorization code has already been used");
+            }
+
+            if (authCode.ExpiresAt <= DateTime.UtcNow)
+            {
+                Console.WriteLine($"[DEBUG] Authorization code expired. Code: {request.code}, Expired at: {authCode.ExpiresAt}");
+                return BadRequest("Authorization code has expired");
+            }
 
             if (authCode.RedirectUri != request.redirect_uri)
                 return BadRequest("Invalid redirect URI");
 
+            // Get user information for token generation first
+            var user = await _userManager.FindByIdAsync(authCode.UserId);
+            if (user == null)
+                return BadRequest("User not found");
+                
             // Mark code as used
             authCode.IsUsed = true;
             await _context.SaveChangesAsync();
+            
+            // Log that we're proceeding with token generation
+            Console.WriteLine($"[DEBUG] Proceeding with token generation for user: {user.Id}");
 
-            // Generate tokens
-            var accessToken = _tokenService.GenerateAccessToken(authCode.UserId, authCode.ClientId, authCode.Scope);
+            // Generate tokens with user details
+            var accessToken = _tokenService.GenerateAccessToken(
+                authCode.UserId, 
+                user.UserName ?? "", 
+                user.Email ?? "", 
+                authCode.ClientId, 
+                authCode.Scope);
             var refreshToken = _tokenService.GenerateRefreshToken();
 
             // Store refresh token
@@ -162,9 +243,16 @@ namespace AuthorizationServer.Controllers
             if (storedRefreshToken.ClientId != request.client_id)
                 return BadRequest("Invalid client for refresh token");
 
-            // Generate new access token
+            // Get user information for token generation
+            var user = await _userManager.FindByIdAsync(storedRefreshToken.UserId);
+            if (user == null)
+                return BadRequest("User not found");
+
+            // Generate new access token with user details
             var accessToken = _tokenService.GenerateAccessToken(
-                storedRefreshToken.UserId, 
+                storedRefreshToken.UserId,
+                user.UserName ?? "",
+                user.Email ?? "",
                 storedRefreshToken.ClientId, 
                 "read write");
 
