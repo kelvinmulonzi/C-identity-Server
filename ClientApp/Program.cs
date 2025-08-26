@@ -18,7 +18,7 @@ builder.Services.AddSession(options =>
 // Add authentication
 builder.Services.AddAuthentication(options =>
     {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
@@ -26,6 +26,11 @@ builder.Services.AddAuthentication(options =>
     {
         options.LoginPath = "/Auth/Login";
         options.LogoutPath = "/Auth/Logout";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.SlidingExpiration = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+        options.Cookie.HttpOnly = true;
     })
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
     {
@@ -38,9 +43,11 @@ builder.Services.AddAuthentication(options =>
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException()))
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] 
+                                       ?? throw new InvalidOperationException()))
         };
     });
+
 
 // Configure logging
 builder.Services.AddLogging(logging =>
@@ -92,7 +99,10 @@ app.Use(async (context, next) =>
 {
     Console.WriteLine($"[DEBUG] Session ID: {context.Session.Id}");
     Console.WriteLine($"[DEBUG] Session Keys: {string.Join(", ", context.Session.Keys)}");
+    Console.WriteLine($"[DEBUG] Request: {context.Request.Method} {context.Request.Path}");
     await next();
+    Console.WriteLine($"[DEBUG] Response: {context.Response.StatusCode} for {context.Request.Path}");
+    
 });
 
 app.MapControllerRoute(

@@ -12,6 +12,7 @@ namespace AuthorizationServer.Services
         string GenerateRefreshToken();
         ClaimsPrincipal ValidateToken(string token);
     }
+                
 
     public class TokenService : ITokenService
     {

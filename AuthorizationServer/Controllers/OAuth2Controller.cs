@@ -127,6 +127,7 @@ namespace AuthorizationServer.Controllers
 
             return BadRequest("Unsupported grant type");
         }
+        
 
         private async Task<IActionResult> HandleAuthorizationCodeGrant(TokenRequest request)
         {

@@ -1,5 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using ClientApp.Services;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace ClientApp.Controllers
 {
@@ -17,9 +22,12 @@ namespace ClientApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            Console.WriteLine("[DEBUG] Login action started");
+    
             // If we already have tokens, just redirect to home
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("access_token")))
             {
+                Console.WriteLine("[DEBUG] User already has access token, redirecting to home");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -27,17 +35,20 @@ namespace ClientApp.Controllers
             var clientId = _configuration["OAuth2:ClientId"]!;
             var redirectUri = _configuration["OAuth2:RedirectUri"]!;
             var scope = "read write";
-    
+
+            Console.WriteLine($"[DEBUG] Authorization Endpoint: {authorizationEndpoint}");
+            Console.WriteLine($"[DEBUG] Client ID: {clientId}");
+            Console.WriteLine($"[DEBUG] Redirect URI: {redirectUri}");
+
             // Only generate a new state if we don't have one already
             var state = HttpContext.Session.GetString("oauth_state") ?? Guid.NewGuid().ToString();
             HttpContext.Session.SetString("oauth_state", state);
-    
+
             // Add a timestamp to prevent CSRF
             var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             state = $"{state}.{timestamp}";
-    
-            Console.WriteLine($"[DEBUG] Login - New state: {state}");
-            Console.WriteLine($"[DEBUG] Session ID: {HttpContext.Session.Id}");
+
+            Console.WriteLine($"[DEBUG] Generated state: {state}");
 
             var authUrl = $"{authorizationEndpoint}?client_id={clientId}" +
                           $"&redirect_uri={Uri.EscapeDataString(redirectUri)}" +
@@ -45,6 +56,7 @@ namespace ClientApp.Controllers
                           $"&scope={Uri.EscapeDataString(scope)}" +
                           $"&state={state}";
 
+            Console.WriteLine($"[DEBUG] Redirecting to: {authUrl}");
             return Redirect(authUrl);
         }
 [HttpGet]
@@ -101,6 +113,24 @@ public async Task<IActionResult> Callback(string code, string state)
         HttpContext.Session.SetString("access_token", tokenResponse.access_token);
         HttpContext.Session.SetString("refresh_token", tokenResponse.refresh_token);
         await HttpContext.Session.CommitAsync();
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, "testuser"), // You can get this from the token if available
+            new Claim("access_token", tokenResponse.access_token)
+        };
+
+        var claimsIdentity = new ClaimsIdentity(claims, 
+            CookieAuthenticationDefaults.AuthenticationScheme);
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(claimsIdentity),
+            new AuthenticationProperties
+            {
+                IsPersistent = true,
+                AllowRefresh = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1)
+            });
 
         Console.WriteLine($"[DEBUG] Callback - Authentication successful, redirecting to home");
         return RedirectToAction("Index", "Home");
@@ -111,12 +141,22 @@ public async Task<IActionResult> Callback(string code, string state)
         return BadRequest($"Authentication failed: {ex.Message}");
     }
 }
+[HttpGet("test-session")]
+public IActionResult TestSession()
+{
+    var sessionId = HttpContext.Session.Id;
+    var testValue = HttpContext.Session.GetString("test_key") ?? "No value set";
+    HttpContext.Session.SetString("test_key", "Test value set at " + DateTime.Now);
+    return Content($"Session ID: {sessionId}\nTest Value: {testValue}");
+}
 
-        [HttpPost]
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
-        }
+
+[HttpPost]
+public async Task<IActionResult> Logout()
+{
+    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    HttpContext.Session.Clear();
+    return RedirectToAction("Index", "Home");
+}
     }
 }
