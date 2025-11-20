@@ -46,7 +46,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// Ensure database is created
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -59,7 +59,7 @@ using (var scope = app.Services.CreateScope())
     if (user == null)
     {
         var newUser = new ApplicationUser { UserName = "alice", Email = "alice@example.com" };
-        await userManager.CreateAsync(newUser, "Test@1234"); // Use a strong password
+        await userManager.CreateAsync(newUser, "Test@1234"); 
     }
 }
 

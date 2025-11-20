@@ -968,19 +968,19 @@
     ]
   },
   "packageFolders": {
-    "/home/mutuku/.nuget/packages/": {}
+    "/home/kelvinmutuku/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/ResourceServer.csproj",
+      "projectUniqueName": "/home/kelvinmutuku/RiderProjects/C-identity-Server/ResourceServer/ResourceServer.csproj",
       "projectName": "ResourceServer",
-      "projectPath": "/home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/ResourceServer.csproj",
-      "packagesPath": "/home/mutuku/.nuget/packages/",
-      "outputPath": "/home/mutuku/RiderProjects/CustomOAuth2Solution/ResourceServer/obj/",
+      "projectPath": "/home/kelvinmutuku/RiderProjects/C-identity-Server/ResourceServer/ResourceServer.csproj",
+      "packagesPath": "/home/kelvinmutuku/.nuget/packages/",
+      "outputPath": "/home/kelvinmutuku/RiderProjects/C-identity-Server/ResourceServer/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mutuku/.nuget/NuGet/NuGet.Config"
+        "/home/kelvinmutuku/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -1047,7 +1047,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.104/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
