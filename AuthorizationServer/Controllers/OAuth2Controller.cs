@@ -56,32 +56,21 @@ namespace AuthorizationServer.Controllers
             if (response_type != "code")
                 return BadRequest("Unsupported response type");
 
-            // For this example, we'll create a test user if it doesn't exist
-            var testUserEmail = "test@example.com";
-            var testUserName = "testuser";
-            var testUserId = "test-user-id";
+            // --- START FIX: SIMULATE AUTHENTICATION ---
+            // In a real application, a user would be authenticated here (via cookie/form).
+            // We are simulating authentication by retrieving the ID of a known, manually registered user.
+
+            var user = await _userManager.FindByNameAsync("marco@gmail.com");
             
-            // Check if user exists, if not create one
-            var user = await _userManager.FindByIdAsync(testUserId);
             if (user == null)
             {
-                user = new ApplicationUser
-                {
-                    Id = testUserId,
-                    UserName = testUserName,
-                    Email = testUserEmail,
-                    EmailConfirmed = true
-                };
-                
-                var result = await _userManager.CreateAsync(user);
-                if (!result.Succeeded)
-                {
-                    return BadRequest("Failed to create test user: " + 
-                        string.Join(", ", result.Errors.Select(e => e.Description)));
-                }
+                // This is the error seen if the user doesn't exist.
+                return BadRequest("Authentication Required. User 'marco@gmail.com' not found for simulation.");
             }
             
             var userId = user.Id;
+
+            // --- END FIX ---
 
             // Generate authorization code
             var code = GenerateAuthorizationCode();
@@ -123,6 +112,10 @@ namespace AuthorizationServer.Controllers
             else if (request.grant_type == "refresh_token")
             {
                 return await HandleRefreshTokenGrant(request);
+            }
+            else if (request.grant_type == "password")
+            {
+                return await HandlePasswordGrant(request);
             }
 
             return BadRequest("Unsupported grant type");
@@ -265,6 +258,65 @@ namespace AuthorizationServer.Controllers
             });
         }
 
+        private async Task<IActionResult> HandlePasswordGrant(TokenRequest request)
+        {
+            // Validate client
+            var client = await _context.Clients
+                .FirstOrDefaultAsync(c => c.ClientId == request.client_id && c.IsActive);
+
+            if (client == null || client.ClientSecret != request.client_secret)
+            {
+                return Unauthorized("Invalid client credentials");
+            }
+
+            // Find user by username or email
+            var user = await _userManager.FindByNameAsync(request.username) ??
+                      await _userManager.FindByEmailAsync(request.username);
+
+            if (user == null)
+            {
+                return Unauthorized("Invalid username or password");
+            }
+
+            // Verify password
+            var isPasswordValid = await _userManager.CheckPasswordAsync(user, request.password);
+            if (!isPasswordValid)
+            {
+                return Unauthorized("Invalid username or password");
+            }
+
+            // Generate tokens
+            var accessToken = _tokenService.GenerateAccessToken(
+                user.Id,
+                user.UserName ?? "",
+                user.Email ?? "",
+                client.ClientId,
+                request.scope ?? "read write");
+
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            // Store refresh token
+            var refreshTokenEntity = new RefreshToken
+            {
+                Token = refreshToken,
+                UserId = user.Id,
+                ClientId = client.ClientId,
+                ExpiresAt = DateTime.UtcNow.AddDays(30)
+            };
+
+            _context.RefreshTokens.Add(refreshTokenEntity);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                access_token = accessToken,
+                token_type = "Bearer",
+                expires_in = 3600,
+                refresh_token = refreshToken,
+                scope = request.scope ?? "read write"
+            });
+        }
+
         private static string GenerateAuthorizationCode()
         {
             using var rng = RandomNumberGenerator.Create();
@@ -282,5 +334,8 @@ namespace AuthorizationServer.Controllers
         public string code { get; set; } = string.Empty;
         public string redirect_uri { get; set; } = string.Empty;
         public string refresh_token { get; set; } = string.Empty;
+        public string username { get; set; } = string.Empty;
+        public string password { get; set; } = string.Empty;
+        public string scope { get; set; } = string.Empty;
     }
 }

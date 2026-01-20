@@ -52,15 +52,6 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
 }
-using (var scope = app.Services.CreateScope())
-{
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var user = await userManager.FindByNameAsync("alice");
-    if (user == null)
-    {
-        var newUser = new ApplicationUser { UserName = "alice", Email = "alice@example.com" };
-        await userManager.CreateAsync(newUser, "Test@1234"); 
-    }
-}
+
 
 app.Run();

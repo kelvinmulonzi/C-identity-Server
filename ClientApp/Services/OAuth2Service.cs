@@ -1,6 +1,10 @@
-using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using ClientApp.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ClientApp.Services
 {
@@ -8,80 +12,73 @@ namespace ClientApp.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<OAuth2Service> _logger;
 
-        public OAuth2Service(HttpClient httpClient, IConfiguration configuration, ILogger<OAuth2Service> logger)
+        public OAuth2Service(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-            _logger = logger;
         }
 
-        public async Task<TokenResponse> ExchangeCodeForToken(string code, string redirectUri)
+        public async Task<TokenResponse?> ExchangeCodeForToken(string code, string redirectUri)
         {
-            var tokenEndpoint = _configuration["OAuth2:TokenEndpoint"]!;
-            var clientId = _configuration["OAuth2:ClientId"]!;
-            var clientSecret = _configuration["OAuth2:ClientSecret"]!;
+            var tokenEndpoint = _configuration["OAuth2:TokenEndpoint"] ?? throw new InvalidOperationException("TokenEndpoint is not configured.");
+            var clientId = _configuration["OAuth2:ClientId"] ?? throw new InvalidOperationException("ClientId is not configured.");
+            var clientSecret = _configuration["OAuth2:ClientSecret"] ?? throw new InvalidOperationException("ClientSecret is not configured.");
 
-            var parameters = new Dictionary<string, string>
+            var tokenRequest = new HttpRequestMessage(HttpMethod.Post, tokenEndpoint)
             {
-                {"grant_type", "authorization_code"},
-                {"client_id", clientId},
-                {"client_secret", clientSecret},
-                {"code", code},
-                {"redirect_uri", redirectUri}
+                Content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    ["grant_type"] = "authorization_code",
+                    ["code"] = code,
+                    ["redirect_uri"] = redirectUri,
+                    ["client_id"] = clientId,
+                    ["client_secret"] = clientSecret
+                })
             };
 
-            var content = new FormUrlEncodedContent(parameters);
-            _logger.LogInformation("Sending token request to {TokenEndpoint}", tokenEndpoint);
-            _logger.LogDebug("Request parameters: {Parameters}", string.Join(", ", parameters.Select(p => $"{p.Key}={p.Value}")));
-            
-            var response = await _httpClient.PostAsync(tokenEndpoint, content);
+            var response = await _httpClient.SendAsync(tokenRequest);
+            response.EnsureSuccessStatusCode();
+
             var responseContent = await response.Content.ReadAsStringAsync();
-            
-            _logger.LogInformation("Token response: {StatusCode} - {Response}", response.StatusCode, responseContent);
-            
-            if (response.IsSuccessStatusCode)
-            {
-                try
-                {
-                    var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(responseContent, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    })!;
-                    
-                    _logger.LogInformation("Successfully obtained access token");
-                    return tokenResponse;
-                }
-                catch (JsonException ex)
-                {
-                    _logger.LogError(ex, "Failed to deserialize token response: {Response}", responseContent);
-                    throw new Exception("Invalid token response format");
-                }
-            }
-            
-            _logger.LogError("Token request failed with status code {StatusCode}. Response: {Response}", 
-                response.StatusCode, responseContent);
-                
-            throw new Exception($"Failed to exchange code for token. Status: {response.StatusCode}, Response: {responseContent}");
+            return JsonSerializer.Deserialize<TokenResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<string> CallProtectedResource(string accessToken, string resourceUrl)
+        public async Task<TokenResponse?> GetTokenWithPasswordAsync(string username, string password)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = 
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+            var tokenEndpoint = _configuration["OAuth2:TokenEndpoint"] ?? throw new InvalidOperationException("TokenEndpoint is not configured.");
+            var clientId = _configuration["OAuth2:ClientId"] ?? throw new InvalidOperationException("ClientId is not configured.");
+            var clientSecret = _configuration["OAuth2:ClientSecret"] ?? throw new InvalidOperationException("ClientSecret is not configured.");
+            var scope = "read write"; 
 
-            var response = await _httpClient.GetAsync(resourceUrl);
+            var tokenRequest = new HttpRequestMessage(HttpMethod.Post, tokenEndpoint)
+            {
+                Content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    ["grant_type"] = "password",
+                    ["username"] = username,
+                    ["password"] = password,
+                    ["client_id"] = clientId,
+                    ["client_secret"] = clientSecret,
+                    ["scope"] = scope
+                })
+            };
+
+            var response = await _httpClient.SendAsync(tokenRequest);
+            if (!response.IsSuccessStatusCode) return null;
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TokenResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<string> CallProtectedResource(string accessToken, string url)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
             return await response.Content.ReadAsStringAsync();
         }
-    }
-
-    public class TokenResponse
-    {
-        public string access_token { get; set; } = string.Empty;
-        public string token_type { get; set; } = string.Empty;
-        public int expires_in { get; set; }
-        public string refresh_token { get; set; } = string.Empty;
-        public string scope { get; set; } = string.Empty;
     }
 }

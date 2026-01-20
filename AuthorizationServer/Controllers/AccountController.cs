@@ -27,7 +27,7 @@ namespace AuthorizationServer.Controllers
 
             [Required]
             [DataType(DataType.Password)]
-            // The password must meet your Identity configuration requirements
+           
             public string Password { get; set; } = string.Empty;
         }
 
@@ -43,11 +43,10 @@ namespace AuthorizationServer.Controllers
             { 
                 UserName = model.Username, 
                 Email = model.Email,
-                // Optional: set to true to skip email confirmation for a simplified demo
                 EmailConfirmed = true 
             };
 
-            // Use UserManager to hash the password and persist the user
+            
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
@@ -61,7 +60,7 @@ namespace AuthorizationServer.Controllers
                 });
             }
 
-            // Return Identity errors if registration failed
+            
             return BadRequest(result.Errors);
         }
     }
