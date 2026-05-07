@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ClientApp.Services;
+using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 
 namespace ClientApp.Controllers
@@ -21,18 +22,14 @@ namespace ClientApp.Controllers
         {
             try
             {
-                var accessToken = HttpContext.Session.GetString("access_token");
-                if (string.IsNullOrEmpty(accessToken))
-                {
-                    return RedirectToAction("Login", "Auth");
-                }
-
-                // Get user info from the token claims
+                // The [Authorize] attribute ensures the user is authenticated.
+                // Claims are populated from the id_token and/or the UserInfo endpoint.
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var userName = User.FindFirst(ClaimTypes.Name)?.Value;
                 var email = User.FindFirst(ClaimTypes.Email)?.Value;
 
                 // If you have a user info endpoint in your resource server, you can fetch additional data
+                // var accessToken = await HttpContext.GetTokenAsync("access_token");
                 // var userInfo = await _oauth2Service.CallProtectedResource(
                 //     accessToken, 
                 //     $"{_configuration["OAuth2:ResourceServer"]}/api/user/{userId}");

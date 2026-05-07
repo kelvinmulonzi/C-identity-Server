@@ -5,63 +5,69 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthorizationServer.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AccountController : ControllerBase
+    
+    public class AccountController : Controller // Change from ControllerBase
     {
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        public class RegisterDto
+        [HttpGet]
+        public IActionResult Login(string returnUrl = null)
         {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; } = string.Empty;
-
-            [Required]
-            public string Username { get; set; } = string.Empty;
-
-            [Required]
-            [DataType(DataType.Password)]
-           
-            public string Password { get; set; } = string.Empty;
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto model)
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password,
+                    isPersistent: false, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    // After server login, redirect back to the OIDC flow
+                    return !string.IsNullOrEmpty(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Index", "Home");
+                }
             }
 
-            var user = new ApplicationUser 
-            { 
-                UserName = model.Username, 
-                Email = model.Email,
-                EmailConfirmed = true 
-            };
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return View(model);
+        }
 
-            
-            var result = await _userManager.CreateAsync(user, model.Password);
+        [HttpGet]
+        public IActionResult Register(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
 
-            if (result.Succeeded)
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
             {
-                // Return a success message and the user's details
-                return Created(string.Empty, new 
-                { 
-                    Message = "User registered successfully. You can now log in.", 
-                    UserId = user.Id,
-                    Username = user.UserName
-                });
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false); // Sign in the new user
+                    // After server registration and login, redirect back to the OIDC flow
+                    return !string.IsNullOrEmpty(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors) ModelState.AddModelError("", error.Description);
             }
 
-            
-            return BadRequest(result.Errors);
+            return View(model);
         }
     }
 }

@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css",
+      "PackagePath": "staticwebassets/AuthorizationServer.dvfsab04ln.bundle.scp.css"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.AuthorizationServer.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.AuthorizationServer.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.build.AuthorizationServer.props",
+      "PackagePath": "build\\AuthorizationServer.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.buildMultiTargeting.AuthorizationServer.props",
+      "PackagePath": "buildMultiTargeting\\AuthorizationServer.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.buildTransitive.AuthorizationServer.props",
+      "PackagePath": "buildTransitive\\AuthorizationServer.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

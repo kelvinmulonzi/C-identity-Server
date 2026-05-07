@@ -20,12 +20,8 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Auth/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9Mb2dpbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Auth/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9SZWdpc3Rlci5jc2h0bWw=
+[/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Data/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGF0YS9Qcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Home/Index.cshtml]
@@ -38,6 +34,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Shared/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Shared/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL1Byb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/kelvinmutuku/RiderProjects/C-identity-Server/ClientApp/Views/Shared/_ValidationScriptsPartial.cshtml]

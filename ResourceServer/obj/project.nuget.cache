@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Hajqkt0D4DQ=",
+  "dgSpecHash": "GKV1N6ooIeM=",
   "success": true,
   "projectFilePath": "/home/kelvinmutuku/RiderProjects/C-identity-Server/ResourceServer/ResourceServer.csproj",
   "expectedPackageFiles": [
@@ -11,7 +11,7 @@
     "/home/kelvinmutuku/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "/home/kelvinmutuku/.nuget/packages/microsoft.identity.abstractions/9.3.0/microsoft.identity.abstractions.9.3.0.nupkg.sha512",
     "/home/kelvinmutuku/.nuget/packages/microsoft.identitymodel.abstractions/8.13.1/microsoft.identitymodel.abstractions.8.13.1.nupkg.sha512",
-    "/home/kelvinmutuku/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.0.1/microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
+    "/home/kelvinmutuku/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.13.1/microsoft.identitymodel.jsonwebtokens.8.13.1.nupkg.sha512",
     "/home/kelvinmutuku/.nuget/packages/microsoft.identitymodel.logging/8.13.1/microsoft.identitymodel.logging.8.13.1.nupkg.sha512",
     "/home/kelvinmutuku/.nuget/packages/microsoft.identitymodel.protocols/8.0.1/microsoft.identitymodel.protocols.8.0.1.nupkg.sha512",
     "/home/kelvinmutuku/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/8.0.1/microsoft.identitymodel.protocols.openidconnect.8.0.1.nupkg.sha512",

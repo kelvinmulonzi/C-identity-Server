@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,26 +21,7 @@
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                        <li class="nav-item">
-                            <span class="nav-link">Hello, @User.Identity.Name!</span>
-                        </li>
-                        <li class="nav-item">
-                            <form method="post" asp-controller="Auth" asp-action="Logout">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-link nav-link">Logout</button>
-                            </form>
-                        </li>
-                        }
-                        else
-                        {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
-                        </li>
-                        }
-                    </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>

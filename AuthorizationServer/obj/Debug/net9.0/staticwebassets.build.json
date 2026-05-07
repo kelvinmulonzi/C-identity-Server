@@ -1,12 +1,694 @@
 {
   "Version": 1,
-  "Hash": "X5fyBoREdZRx0efOjGEBugoNPMdVFvsmOE1NHMRZpyY=",
+  "Hash": "6D3BldfkybVNHRhxha1eIx3EWKAgssUhBPM4kLyFsTI=",
   "Source": "AuthorizationServer",
   "BasePath": "_content/AuthorizationServer",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": [
+    {
+      "Identity": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/bk82s4i2fn-dvfsab04ln.gz",
+      "SourceId": "AuthorizationServer",
+      "SourceType": "Computed",
+      "ContentRoot": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/",
+      "BasePath": "_content/AuthorizationServer",
+      "RelativePath": "AuthorizationServer#[.{fingerprint=dvfsab04ln}]?.styles.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/bundle/AuthorizationServer.styles.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "v7ta1yhz4h",
+      "Integrity": "a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/bundle/AuthorizationServer.styles.css"
+    },
+    {
+      "Identity": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/vkntsihqdk-dvfsab04ln.gz",
+      "SourceId": "AuthorizationServer",
+      "SourceType": "Computed",
+      "ContentRoot": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/",
+      "BasePath": "_content/AuthorizationServer",
+      "RelativePath": "AuthorizationServer#[.{fingerprint=dvfsab04ln}]!.bundle.scp.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "v7ta1yhz4h",
+      "Integrity": "a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css"
+    },
+    {
+      "Identity": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/bundle/AuthorizationServer.styles.css",
+      "SourceId": "AuthorizationServer",
+      "SourceType": "Computed",
+      "ContentRoot": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/bundle/",
+      "BasePath": "_content/AuthorizationServer",
+      "RelativePath": "AuthorizationServer#[.{fingerprint}]?.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "Fingerprint": "dvfsab04ln",
+      "Integrity": "p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/bundle/AuthorizationServer.styles.css"
+    },
+    {
+      "Identity": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css",
+      "SourceId": "AuthorizationServer",
+      "SourceType": "Computed",
+      "ContentRoot": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/",
+      "BasePath": "_content/AuthorizationServer",
+      "RelativePath": "AuthorizationServer#[.{fingerprint}]!.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "dvfsab04ln",
+      "Integrity": "p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "AuthorizationServer.bundle.scp.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/vkntsihqdk-dvfsab04ln.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001855287570"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.bundle.scp.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.bundle.scp.css.gz",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/vkntsihqdk-dvfsab04ln.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.dvfsab04ln.bundle.scp.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/vkntsihqdk-dvfsab04ln.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001855287570"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dvfsab04ln"
+        },
+        {
+          "Name": "label",
+          "Value": "AuthorizationServer.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.dvfsab04ln.bundle.scp.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dvfsab04ln"
+        },
+        {
+          "Name": "label",
+          "Value": "AuthorizationServer.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.dvfsab04ln.bundle.scp.css.gz",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/vkntsihqdk-dvfsab04ln.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dvfsab04ln"
+        },
+        {
+          "Name": "label",
+          "Value": "AuthorizationServer.bundle.scp.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.dvfsab04ln.styles.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/bk82s4i2fn-dvfsab04ln.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001855287570"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dvfsab04ln"
+        },
+        {
+          "Name": "label",
+          "Value": "AuthorizationServer.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.dvfsab04ln.styles.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/bundle/AuthorizationServer.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dvfsab04ln"
+        },
+        {
+          "Name": "label",
+          "Value": "AuthorizationServer.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.dvfsab04ln.styles.css.gz",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/bk82s4i2fn-dvfsab04ln.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dvfsab04ln"
+        },
+        {
+          "Name": "label",
+          "Value": "AuthorizationServer.styles.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.styles.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/bk82s4i2fn-dvfsab04ln.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001855287570"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.styles.css",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/bundle/AuthorizationServer.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-p2r81A35debQw1l1ckE9FuPoQGkgpmnk+zotSsGRJIc="
+        }
+      ]
+    },
+    {
+      "Route": "AuthorizationServer.styles.css.gz",
+      "AssetFile": "/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/bk82s4i2fn-dvfsab04ln.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "538"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 Jan 2026 13:42:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-a+u1BfqHXJB82B3TFlJbqDeKRPTEVnMuTGD5h/OnkC4="
+        }
+      ]
+    }
+  ]
 }

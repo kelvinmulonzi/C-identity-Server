@@ -1,8 +1,12 @@
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using AuthorizationServer.Data;
 using AuthorizationServer.Models;
 using AuthorizationServer.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +18,33 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddSingleton<ISigningKeyService, SigningKeyService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
+// JWT bearer auth — used by /connect/userinfo to validate access tokens
+builder.Services.AddAuthentication()
+    .AddJwtBearer();
+
+builder.Services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+    .Configure<ISigningKeyService>((options, signingKeys) =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKeys.GetSecurityKey(),
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllersWithViews();
 
 // CORS configuration
 builder.Services.AddCors(options =>
@@ -32,6 +58,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+app.UseStaticFiles();
+
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
@@ -53,5 +81,5 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
-
+app.MapDefaultControllerRoute();
 app.Run();

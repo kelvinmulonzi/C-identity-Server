@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Resource API Profile";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.Error != null)
+{
+    <pre style="color:#b00">Error: @ViewBag.Error</pre>
+}
+else
+{
+    <p>Response from ResourceServer <code>/api/User/profile</code>:</p>
+    <pre>@ViewBag.ApiResponse</pre>
+}
+
+<p><a asp-controller="Home" asp-action="Index">Home</a></p>

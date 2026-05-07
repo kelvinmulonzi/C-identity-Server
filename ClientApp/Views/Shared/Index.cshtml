@@ -1,0 +1,46 @@
+@model dynamic
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<h1>User Profile</h1>
+
+<p>This information comes from the claims in the ID Token provided by the Authorization Server.</p>
+
+@if (Model != null)
+{
+    <dl class="row">
+        <dt class="col-sm-3">User ID</dt>
+        <dd class="col-sm-9">@Model.UserId</dd>
+
+        <dt class="col-sm-3">Username</dt>
+        <dd class="col-sm-9">@Model.UserName</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+    </dl>
+
+    <h3>All Claims:</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var claim in User.Claims)
+        {
+            <tr>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No profile information available.</p>
+}

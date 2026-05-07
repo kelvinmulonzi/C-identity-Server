@@ -1,8 +1,11 @@
  using Microsoft.AspNetCore.Mvc;
 using ClientApp.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClientApp.Controllers
 {
+    [Authorize] // Require authentication for this controller
     public class DataController : Controller
     {
         private readonly OAuth2Service _oauth2Service;
@@ -17,16 +20,12 @@ namespace ClientApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var accessToken = HttpContext.Session.GetString("access_token");
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                return RedirectToAction("Login", "Auth");
-            }
-
             try
             {
+                // Get the access token from the authentication cookie
+                var accessToken = await HttpContext.GetTokenAsync("access_token");
                 var resourceUrl = _configuration["OAuth2:ResourceServer"] + "/api/user/profile";
-                var result = await _oauth2Service.CallProtectedResource(accessToken, resourceUrl);
+                var result = await _oauth2Service.CallProtectedResource(accessToken!, resourceUrl);
                 
                 ViewBag.ApiResponse = result;
                 return View();

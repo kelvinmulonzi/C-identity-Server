@@ -10,6 +10,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.8",
           "Microsoft.AspNetCore.OpenApi": "9.0.3",
+          "Microsoft.IdentityModel.JsonWebTokens": "8.13.1",
           "Microsoft.IdentityModel.Tokens": "8.13.1",
           "Swashbuckle.AspNetCore": "9.0.3"
         },
@@ -62,14 +63,14 @@
           }
         }
       },
-      "Microsoft.IdentityModel.JsonWebTokens/8.0.1": {
+      "Microsoft.IdentityModel.JsonWebTokens/8.13.1": {
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "8.13.1"
         },
         "runtime": {
           "lib/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll": {
-            "assemblyVersion": "8.0.1.0",
-            "fileVersion": "8.0.1.50722"
+            "assemblyVersion": "8.13.1.0",
+            "fileVersion": "8.13.1.60808"
           }
         }
       },
@@ -168,7 +169,7 @@
       },
       "System.IdentityModel.Tokens.Jwt/8.0.1": {
         "dependencies": {
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.1",
+          "Microsoft.IdentityModel.JsonWebTokens": "8.13.1",
           "Microsoft.IdentityModel.Tokens": "8.13.1"
         },
         "runtime": {
@@ -235,12 +236,12 @@
       "path": "microsoft.identitymodel.abstractions/8.13.1",
       "hashPath": "microsoft.identitymodel.abstractions.8.13.1.nupkg.sha512"
     },
-    "Microsoft.IdentityModel.JsonWebTokens/8.0.1": {
+    "Microsoft.IdentityModel.JsonWebTokens/8.13.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-s6++gF9x0rQApQzOBbSyp4jUaAlwm+DroKfL8gdOHxs83k8SJfUXhuc46rDB3rNXBQ1MVRxqKUrqFhO/M0E97g==",
-      "path": "microsoft.identitymodel.jsonwebtokens/8.0.1",
-      "hashPath": "microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512"
+      "sha512": "sha512-y2aOHMgUccbiiikRyzuQkxD6Z7TGTVVxWlh3p+HfpMtnl91H64CgPIcO14rZtnO3lQjF3FAKc9iaqdTcRKQfQw==",
+      "path": "microsoft.identitymodel.jsonwebtokens/8.13.1",
+      "hashPath": "microsoft.identitymodel.jsonwebtokens.8.13.1.nupkg.sha512"
     },
     "Microsoft.IdentityModel.Logging/8.13.1": {
       "type": "package",

@@ -402,3 +402,11 @@
 /home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/AuthorizationServer.pdb
 /home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/AuthorizationServer.genruntimeconfig.cache
 /home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/ref/AuthorizationServer.dll
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/AuthorizationServer.RazorAssemblyInfo.cache
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/AuthorizationServer.RazorAssemblyInfo.cs
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/bin/Debug/net9.0/AuthorizationServer.staticwebassets.runtime.json
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/scopedcss/projectbundle/AuthorizationServer.bundle.scp.css
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/bk82s4i2fn-dvfsab04ln.gz
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/obj/Debug/net9.0/compressed/vkntsihqdk-dvfsab04ln.gz
+/home/kelvinmutuku/RiderProjects/C-identity-Server/AuthorizationServer/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

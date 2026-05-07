@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "API Data";
+}
+
+<h1>API Data</h1>
+
+<p>This page calls a protected API endpoint (<code>/api/user/profile</code>) on the Resource Server and displays the result.</p>
+
+@if (ViewBag.ApiResponse != null)
+{
+    <h2>API Response:</h2>
+    <pre><code class="json">@ViewBag.ApiResponse</code></pre>
+}
+
+@if (ViewBag.Error != null)
+{
+    <h2>Error:</h2>
+    <div class="alert alert-danger">
+        <p>An error occurred while calling the API:</p>
+        <pre><code>@ViewBag.Error</code></pre>
+        <p><strong>Note:</strong> Ensure your ResourceServer is running and the <code>/api/user/profile</code> endpoint is configured correctly.</p>
+    </div>
+}

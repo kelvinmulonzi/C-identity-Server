@@ -7,6 +7,8 @@ using AuthorizationServer.Services;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace AuthorizationServer.Controllers
 {
@@ -28,18 +30,16 @@ namespace AuthorizationServer.Controllers
             _tokenService = tokenService;
         }
 
+        [Authorize]
         [HttpGet("authorize")]
         public async Task<IActionResult> Authorize(
             [FromQuery] string client_id,
             [FromQuery] string redirect_uri,
             [FromQuery] string response_type,
             [FromQuery] string scope,
-            [FromQuery] string state)
+            [FromQuery] string state,
+            [FromQuery] string? nonce = null)
         {
-            // Debug: Log all clients in database
-            var allClients = await _context.Clients.ToListAsync();
-            Console.WriteLine($"[DEBUG] All clients in database: {System.Text.Json.JsonSerializer.Serialize(allClients)}");
-            
             // Validate client
             var client = await _context.Clients
                 .FirstOrDefaultAsync(c => c.ClientId == client_id && c.IsActive);
@@ -56,21 +56,11 @@ namespace AuthorizationServer.Controllers
             if (response_type != "code")
                 return BadRequest("Unsupported response type");
 
-            // --- START FIX: SIMULATE AUTHENTICATION ---
-            // In a real application, a user would be authenticated here (via cookie/form).
-            // We are simulating authentication by retrieving the ID of a known, manually registered user.
+            // Get the authenticated user's ID from the claims
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var user = await _userManager.FindByNameAsync("marco@gmail.com");
-            
-            if (user == null)
-            {
-                // This is the error seen if the user doesn't exist.
-                return BadRequest("Authentication Required. User 'marco@gmail.com' not found for simulation.");
-            }
-            
-            var userId = user.Id;
-
-            // --- END FIX ---
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User is not authenticated.");
 
             // Generate authorization code
             var code = GenerateAuthorizationCode();
@@ -81,6 +71,7 @@ namespace AuthorizationServer.Controllers
                 UserId = userId,
                 RedirectUri = redirect_uri,
                 Scope = scope ?? "",
+                Nonce = nonce,
                 ExpiresAt = DateTime.UtcNow.AddMinutes(10)
             };
 
@@ -188,10 +179,10 @@ namespace AuthorizationServer.Controllers
 
             // Generate tokens with user details
             var accessToken = _tokenService.GenerateAccessToken(
-                authCode.UserId, 
-                user.UserName ?? "", 
-                user.Email ?? "", 
-                authCode.ClientId, 
+                authCode.UserId,
+                user.UserName ?? "",
+                user.Email ?? "",
+                authCode.ClientId,
                 authCode.Scope);
             var refreshToken = _tokenService.GenerateRefreshToken();
 
@@ -207,12 +198,25 @@ namespace AuthorizationServer.Controllers
             _context.RefreshTokens.Add(refreshTokenEntity);
             await _context.SaveChangesAsync();
 
+            var scopes = (authCode.Scope ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string? idToken = null;
+            if (scopes.Contains("openid"))
+            {
+                idToken = _tokenService.GenerateIdToken(
+                    authCode.UserId,
+                    user.UserName ?? "",
+                    user.Email ?? "",
+                    authCode.ClientId,
+                    authCode.Nonce);
+            }
+
             return Ok(new
             {
                 access_token = accessToken,
                 token_type = "Bearer",
                 expires_in = 3600,
                 refresh_token = refreshToken,
+                id_token = idToken,
                 scope = authCode.Scope
             });
         }

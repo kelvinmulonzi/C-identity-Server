@@ -1,86 +1,54 @@
-using ClientApp.Services;
+// ClientApp/Program.cs
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-// Configure session with proper settings
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
-
-// Add authentication
 builder.Services.AddAuthentication(options =>
     {
-        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        // Use cookies for the local session
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        // Use OIDC for the login challenge
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
         options.LoginPath = "/Auth/Login";
-        options.LogoutPath = "/Auth/Logout";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-        options.SlidingExpiration = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        options.Cookie.SameSite = SameSiteMode.Lax;
-        options.Cookie.HttpOnly = true;
     })
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] 
-                                       ?? throw new InvalidOperationException()))
-        };
+        // The URL of your AuthorizationServer
+        options.Authority = builder.Configuration["OAuth2:Issuer"];
+        options.ClientId = builder.Configuration["OAuth2:ClientId"];
+        options.ClientSecret = builder.Configuration["OAuth2:ClientSecret"];
+        options.ResponseType = "code"; // Use Authorization Code Flow
+        options.ResponseMode = "query";
+        options.CallbackPath = "/auth/callback";
+        options.RequireHttpsMetadata = false;
+
+        // Dev-only: callback comes from a cross-site redirect over plain http,
+        // so default Secure+SameSite=None cookies would never come back.
+        options.NonceCookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
+        options.NonceCookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
+        options.CorrelationCookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
+        options.CorrelationCookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
+
+        options.SaveTokens = true; // Automatically stores access_token in the cookie
+        options.GetClaimsFromUserInfoEndpoint = true;
+
+        options.Scope.Clear();
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("offline_access"); // Request refresh tokens
     });
 
-
-// Configure logging
-builder.Services.AddLogging(logging =>
-{
-    logging.AddConsole();
-    logging.AddDebug();
-    logging.SetMinimumLevel(LogLevel.Debug);
-});
-
-//  HttpClient registration with SSL bypass only in development
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddHttpClient<OAuth2Service>()
-        .ConfigurePrimaryHttpMessageHandler(() =>
-        {
-            return new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback =
-                    (message, cert, chain, errors) => true
-            };
-        });
-}
-else
-{
-    builder.Services.AddHttpClient<OAuth2Service>();
-}
-
-// Register OAuth2Service with ILogger
-builder.Services.AddScoped<OAuth2Service>();
+builder.Services.AddAuthorization();
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<ClientApp.Services.OAuth2Service>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -89,21 +57,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
-app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Log session state for debugging
-app.Use(async (context, next) =>
-{
-    Console.WriteLine($"[DEBUG] Session ID: {context.Session.Id}");
-    Console.WriteLine($"[DEBUG] Session Keys: {string.Join(", ", context.Session.Keys)}");
-    Console.WriteLine($"[DEBUG] Request: {context.Request.Method} {context.Request.Path}");
-    await next();
-    Console.WriteLine($"[DEBUG] Response: {context.Response.StatusCode} for {context.Request.Path}");
-    
-});
 
 app.MapControllerRoute(
     name: "default",

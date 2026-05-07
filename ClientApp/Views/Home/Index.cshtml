@@ -4,24 +4,13 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    
-    @if (User.Identity?.IsAuthenticated == true)
+    <p>This is the Client Application.</p>
+    @if (User.Identity?.IsAuthenticated != true)
     {
-        <div class="mt-5">
-            <h3>User Information</h3>
-            <p><strong>User ID:</strong> @(ViewBag.UserId ?? "Not available")</p>
-            <p><strong>Username:</strong> @(ViewBag.UserName ?? "Not available")</p>
-            <p><strong>Email:</strong> @(ViewBag.Email ?? "Not available")</p>
-        </div>
-
-        <div class="mt-4">
-            <a asp-controller="Auth" asp-action="Logout" class="btn btn-danger">Logout</a>
-        </div>
+        <p>Please <a asp-controller="Auth" asp-action="Login">Login</a> or <a asp-controller="Auth" asp-action="Register">Register</a> to continue.</p>
     }
     else
     {
-        <div class="mt-4">
-            <a asp-controller="Auth" asp-action="Login" class="btn btn-primary">Login</a>
-        </div>
+        <p>You are logged in as <strong>@User.Identity.Name</strong>.</p>
     }
 </div>
